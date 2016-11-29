@@ -61,6 +61,7 @@
       padding: 24px 0px 18px 24px
       .avarta
         flex: 1 
+        margin-right: 10px
         img
           border-radius: 2px
       .content
@@ -113,7 +114,7 @@
             position: absolute
             right: 12px
             bottom: 6px
-            padding: 0 18px
+            padding: 0 8px
             height: 24px
             line-height: 24px
             border-radius: 14px
@@ -130,6 +131,17 @@
       white-space: nowrap
       text-overflow: ellipsis
       padding: 0 22px 0 12px
+      .bulletin-title
+        display: inline-block
+        width: 22px 
+        height: 12px
+        bg-image('bulletin')
+        background-size: 22px 12px
+        background-repeat: no-repeat
+        vertical-align: middle
+      .bulletin-text
+        font-size: 10px
+
 
 
 </style>
