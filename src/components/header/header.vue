@@ -37,7 +37,7 @@
     <div class="background" >
         <img :src="seller.avatar" width="100%" height="100%"/>
     </div>
-    <div class="detail" v-show="detailShow">
+    <div class="detail" v-show="detailShow" transition="fade">
       <div class="detail-wrapper ">
         <div class="detail-main">
           <div class="name">
@@ -46,8 +46,22 @@
           <div class="starWrapper">
             <star :size="48" :score="seller.score"></star>
           </div>
-          
-          
+          <div class="title">
+            <div class="line"></div>
+            <div class="text">优惠信息</div>
+            <div class="line"></div>
+          </div>  
+          <ul v-if="seller.supports" class="supports">
+            <li v-for="support in seller.supports" class="support-item">
+              <span :class="classMap[support.type]" class="icon"></span>
+              <span class="text">{{support.description}}</span>
+            </li>
+          </ul>
+          <title :content="f">{{contentd}}</title> 
+          <div class="bulletin">
+            <p class="content">{{seller.bulletin}}</p>
+          </div>
+      
         </div>
       </div>
       <div class="detail-close" @click="showData">
@@ -59,6 +73,7 @@
 </template>
 <script type='text/ecmascript-6'>
   import star from 'components/star/star';
+  import title from 'components/star/title';
   export default {
     props: {
       seller: {
@@ -79,7 +94,7 @@
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
     },
     components: {
-      star
+      star, title
     }
   };
 </script>
@@ -127,6 +142,7 @@
         .support
           .icon
             display: inline-block
+            vertical-align: top;
             width: 12px
             height: 12px
             margin-right: 5px
@@ -200,12 +216,19 @@
       width: 100%
       height: 100%
       overflow: auto
-      background: rgba(7,17,27,0.8)
+      transition: all 0.5s
+      backdrop-filter: blur(10px)
+      &.fade-transition
+        opacity: 1
+        background: rgba(7,17,27,0.8)
+      &.fade-enter,&.fade-leave
+        opacity: 0
+        background: rgba(7,17,27,0)        
       .detail-wrapper
         min-height: 100%
         .detail-main
-          padding-top: 64px 
-          padding-bottom: 64px
+          padding-top: 32px 
+          padding-bottom: 32px
           .name
             line-height: 16px
             text-align: center
@@ -213,6 +236,45 @@
             margin-top: 18px
             padding: 2px 0
             text-align: center 
+          
+          .supports
+            width: 80%
+            margin: 0 auto
+            .support-item
+              padding: 0 12px
+              margin-bottom: 12px
+              &:last-child
+                margin-bottom: 0
+              .icon
+                display: inline-block
+                vertical-align: top;
+                width: 16px
+                height: 16px
+                margin-right: 5px
+                background-size: 16px 16px
+                background-repeat: no-repeat
+                &.decrease
+                  bg-image('decrease_1')
+                &.discount
+                  bg-image('discount_1')
+                &.guarantee
+                  bg-image('guarantee_1')
+                &.invoice
+                  bg-image('invoice_1')
+                &.special
+                  bg-image('special_1')
+              .text
+                line-height: 14px
+                font-size: 14px
+                vertical-align: top
+          .bulletin
+            width: 80%
+            margin: 0 auto
+            .content
+              padding: 0 12px
+              line-height: 24px
+              font-size: 12px
+
       .detail-close
         position: relative
         width: 32px
