@@ -47,3 +47,12 @@
 	</div>
 	   
 	```
+	
+- flex  
+[flex布局计算原理](http://blog.csdn.net/lihongxun945/article/details/45458717)  
+[阮一峰布局语法](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html?utm_source=tuicool)  
+[阮一峰布局实例](http://www.ruanyifeng.com/blog/2015/07/flex-examples.html)
+
+	1. flex-grow
+	2. flex-shrink
+	3. flex-basis

@@ -46,18 +46,14 @@
           <div class="starWrapper">
             <star :size="48" :score="seller.score"></star>
           </div>
-          <div class="title">
-            <div class="line"></div>
-            <div class="text">优惠信息</div>
-            <div class="line"></div>
-          </div>  
+          <title-slot> <div class="text">优惠信息</div> </title-slot>  
           <ul v-if="seller.supports" class="supports">
             <li v-for="support in seller.supports" class="support-item">
               <span :class="classMap[support.type]" class="icon"></span>
               <span class="text">{{support.description}}</span>
             </li>
           </ul>
-          <title :content="f">{{contentd}}</title> 
+          <title-props :cc="'商家信息'"></title-props> 
           <div class="bulletin">
             <p class="content">{{seller.bulletin}}</p>
           </div>
@@ -73,7 +69,8 @@
 </template>
 <script type='text/ecmascript-6'>
   import star from 'components/star/star';
-  import title from 'components/star/title';
+  import titleProps from 'components/title/titleProps';
+  import titleSlot from 'components/title/titleSlot';
   export default {
     props: {
       seller: {
@@ -82,7 +79,7 @@
     },
     data() {
       return {
-        detailShow: true
+        detailShow: false
       };
     },
     methods: {
@@ -94,7 +91,7 @@
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
     },
     components: {
-      star, title
+      star, titleProps, titleSlot
     }
   };
 </script>

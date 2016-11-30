@@ -1,26 +1,11 @@
 <template>
 <div class="title">
   <div class="line"></div>
-  <div class="text">{{contentd}}</div>
+  <slot></slot>
   <div class="line"></div>
 </div> 
 </template>
 <script type='text/ecmascript-6'>
-export default {
- data() {
-  return {
-    contentd: '商家'
-  };
- },
- props: {
-  content: {
-    type: String
-  }
- },
- created() {
-    this.contentd = this.content;
- }
-};
 </script>
 <style lang='stylus' rel='stylssheet/stylus'>
 .title
