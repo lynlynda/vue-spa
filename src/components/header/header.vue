@@ -13,38 +13,73 @@
             <div class="description">
               {{seller.description}}/{{seller.deliveryTime}}分钟送达
             </div>
-            <div v-if="seller.supports" class="support">
+            <div v-if="seller.supports" class="support" >
                 <span class="icon" :class="classMap[seller.supports[0].type]"></span>
                 <span class="text">{{seller.supports[0].description}}</span>
             </div>
-            <div v-if="seller.supports" class="support-count">
+            <div v-if="seller.supports" class="support-count" @click="showData()">
               <span class="count">{{seller.supports.length}}个</span>
-              <i class="icon-thumb_up"></i>
+              <i class="icon-keyboard_arrow_right"></i>
             </div>
         </div>
          
     
     </div>
-    <div class="bulletin-wrapper">
+    <div class="bulletin-wrapper" @click="showData()">
         <span class="bulletin-title">
           
         </span>
         <span class="bulletin-text">
           {{seller.bulletin}}
         </span>
-        <i class="icon-thumb_up"></i>
+        <i class="icon-keyboard_arrow_right"></i>
+    </div>
+    <div class="background" >
+        <img :src="seller.avatar" width="100%" height="100%"/>
+    </div>
+    <div class="detail" v-show="detailShow">
+      <div class="detail-wrapper ">
+        <div class="detail-main">
+          <div class="name">
+            {{seller.name}}
+          </div>
+          <div class="starWrapper">
+            <star :size="48" :score="seller.score"></star>
+          </div>
+          
+          
+        </div>
+      </div>
+      <div class="detail-close" @click="showData">
+         <i class="icon-close"></i>     
+      </div>
+        
     </div>
    </div>
 </template>
 <script type='text/ecmascript-6'>
+  import star from 'components/star/star';
   export default {
     props: {
       seller: {
         type: Object
       }
     },
+    data() {
+      return {
+        detailShow: true
+      };
+    },
+    methods: {
+      showData() {
+        this.detailShow = !this.detailShow;
+      }
+    },
     created() {
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
+    },
+    components: {
+      star
     }
   };
 </script>
@@ -54,17 +89,18 @@
 
   .header
     color: #fff
-    background: #999
+    position: relative
+    background-color: rgba(7,17,27,0.2)
     align-items: center;
     .content-wrapper
       display: flex
       padding: 24px 0px 18px 24px
       .avarta
-        flex: 1 
-        margin-right: 10px
+        flex: 1
         img
           border-radius: 2px
-      .content
+      .content 
+        margin-left: 10px
         position: relative
         flex-direction: column
         flex: 1
@@ -126,6 +162,8 @@
             .icon-keyboard_arrow_right
               font-size: 10px
     .bulletin-wrapper
+      line-height: 22px
+      position: relative
       height: 28px
       overflow: hidden
       white-space: nowrap
@@ -141,6 +179,51 @@
         vertical-align: middle
       .bulletin-text
         font-size: 10px
+      .icon-thumb_up
+        position: absolute
+        right: 0
+        top: 6px
+        font-size: 16px
+    .background
+      position: absolute
+      top: 0
+      left: 0
+      width: 100%
+      height: 100%
+      z-index: -1
+      filter: blur(10px)
+    .detail 
+      position: fixed
+      top: 0
+      left: 0
+      z-index: 100
+      width: 100%
+      height: 100%
+      overflow: auto
+      background: rgba(7,17,27,0.8)
+      .detail-wrapper
+        min-height: 100%
+        .detail-main
+          padding-top: 64px 
+          padding-bottom: 64px
+          .name
+            line-height: 16px
+            text-align: center
+          .starWrapper
+            margin-top: 18px
+            padding: 2px 0
+            text-align: center 
+      .detail-close
+        position: relative
+        width: 32px
+        height: 32px
+        margin: -64px auto
+        font-size: 32px
+
+
+
+
+
 
 
 
