@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "babel-runtime": "^6.0.0",
+    "better-scroll": "0.1.7",
+    "iscroll": "^5.2.0",
     "vue": "^1.0.21",
     "vue-resource": "^1.0.3",
     "vue-router": "^0.7.13"

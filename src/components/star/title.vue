@@ -1,14 +1,35 @@
 <template>
-<div class="title-1">
+<div class="title">
   <div class="line"></div>
-  <slot></slot>
+  <div classtitle="text">{{tt}}</div>
   <div class="line"></div>
 </div> 
 </template>
 <script type='text/ecmascript-6'>
+export default {
+ data() {
+  return {
+    content: ''
+  };
+ },
+ props: {
+    cc: {
+      type: [String, Number]
+    }
+ },
+ computed: {
+  tt() {
+    this.content = this.cc;
+    return this.content;
+  },
+  yh() {
+    return this.content[1];
+  }
+ }
+};
 </script>
 <style lang='stylus' rel='stylssheet/stylus'>
-.title-1
+.title
   display: flex;
   width: 80%
   margin: 28px auto 24px auto

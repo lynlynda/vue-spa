@@ -55,4 +55,68 @@
 
 	1. flex-grow
 	2. flex-shrink
-	3. flex-basis
+	3. flex-basis  
+- v-el   this.$el.  
+```html```
+
+
+	```
+	<div class="menu-wrapper" v-el:menu-wrapper>
+	    <ul>
+	      <li v-for="item in goods" class="menu-item" :class="{'current':currentIndex === $index}" @click="selectMenu($index,$event)">
+	        <span class="text border-1px">
+	          <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>{{item.name}}
+	        </span>
+	      </li>
+	    </ul>
+	  </div>  
+	    
+	```  
+	
+	```script``` 
+	 
+	```
+	selectMenu(index, e) {
+        if (e._constructed) {
+          return;
+        }
+        console.log(1);
+        let foodlist = this.$els.foodsWrapper.getElementsByClassName('food-list-hook');
+        let el = foodlist[index];
+        this.foodsScroll.scrollToElement(el, 300);
+      }  
+       
+    ```
+
+  
+- this.$nextTick(() => {})   
+  涉及dom相关的计算时，需要保证dom已经渲染完毕：
+    
+  ```
+	  this.$nextTick(() => {   
+		 //dom渲染完毕
+		  dosometing  
+	  })
+   
+  ```
+  
+- better-scroll   
+  1. 会阻止默认点击行为,需要进行设置才能用  
+
+	```
+	this.menuScroll = new BScroll(this.$els.menuWrapper, {
+	          click: true
+	 });
+	```  
+	如此设置，在pc端使用better-scroll时，会产生两次click事件，因为浏览器执行一次，better-scroll执行一次。因此需要将浏览器的阻止掉。 
+	 
+	```
+	
+	  selectMenu(index,e) {    	
+        if(e._constructed){
+          return;
+        }
+        console.log(this.listHeight[index]);
+      }
+   ```
+	
