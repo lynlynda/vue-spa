@@ -119,4 +119,17 @@
         console.log(this.listHeight[index]);
       }
    ```
+- vue里面如果props是一个数组或者对象，default需要是一个函数  
+
+ ```
+ props: {  
+	 	selectFood:{  	
+	 		type: Array,   		
+	 		default() {  		
+	 			return [];  		
+	 		}  		
+	 	}  	
+ }  
+  
+ ```
 	

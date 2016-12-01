@@ -12,10 +12,10 @@
              <a v-link="{path:'/seller'}">商家</a>
           </div>
     </div>    
-    <router-view></router-view>
+    <router-view :seller="seller"></router-view>
   </div>
 </template>
-<script >
+<script>
 import header from 'components/header/header.vue';
 const ERR_OK = 0;
 export default {

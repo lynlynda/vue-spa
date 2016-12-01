@@ -1,6 +1,5 @@
 <template>
 <div class="goods">
-  
   <div class="menu-wrapper" v-el:menu-wrapper>
     <ul>
       <li v-for="item in goods" class="menu-item" :class="{'current':currentIndex === $index}" @click="selectMenu($index,$event)">
@@ -36,10 +35,12 @@
       </li>
     </ul>
   </div>
+  <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
 </div>
 </template>
 <script type='text/ecmascript-6'>
 import BScroll from 'better-scroll';
+import shopcart from 'components/shopcart/shopcart';
 
 const ERR_OK = 0;
   export default {
@@ -83,7 +84,7 @@ const ERR_OK = 0;
     },
     methods: {
       selectMenu(index, e) {
-        if (e._constructed) {
+        if (!e._constructed) {
           return;
         }
         console.log(1);
@@ -114,6 +115,9 @@ const ERR_OK = 0;
           this.listHeight.push(height);
         }
       }
+    },
+    components: {
+      shopcart
     }
   };
 </script>
