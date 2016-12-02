@@ -67,7 +67,7 @@
     </div>
    </div>
 </template>
-<script type='text/ecmascript-6'>
+<script type='text/javascript'>
   import star from 'components/star/star';
   import titleProps from 'components/title/titleProps';
   import titleSlot from 'components/title/titleSlot';
