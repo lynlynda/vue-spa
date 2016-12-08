@@ -7,7 +7,7 @@
         <i class="icon-arrow_lift"></i>
       </div>
     </div>
-    <div class="div content">
+    <div class="content">
       <h1 class="title">{{food.name}}</h1>
       <div class="detail">
         <span class="sell-count">月售{{food.sellCount}}</span>
@@ -18,10 +18,15 @@
         <span class="now">￥{{food.price}}</span><span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
       </div>
     </div>
+    <div class="cartcontrol-wrapper">
+      <cartcontrol :food="food"></cartcontrol>
+    </div>
+    <div class="buy" v-show="!food.count || food.count === 0">加入购物车</div>
   </div>
 </template>
 <script type='text/javascript'>
-  import BScroll from 'better-scroll';
+import BScroll from 'better-scroll';
+import cartcontrol from 'components/cartcontrol/cartcontrol';
   export default {
     props: {
       food: {
@@ -49,6 +54,9 @@
       hide() {
         this.showFlag = false;
       }
+    },
+    components: {
+      cartcontrol
     }
   };
 </script>
@@ -115,6 +123,20 @@
           text-decoration: line-through
           font-size: 10px
           color: rgb(147,153,159)
+    .cartcontrol-wrapper
+      position: absolute
+      right: 12px
+      bottom: 12px
+    .buy
+      position: absolute
+      right: 18px
+      bottom: 18px
+      z-index: 10
+      height: 24px
+      line-height: 24px
+      padding: 0 12px
+      box-sizing: border-box
+
 
 
 </style>
