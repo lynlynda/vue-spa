@@ -21,11 +21,13 @@
         if (!e._constructed) {
           return;
         }
+        console.log('jjj');
         if (!this.food.count) {
           Vue.set(this.food, 'count', 1);
         } else {
           this.food.count++;
         }
+        this.$dispatch('cart.add', e.target);
       },
       decreaseCart(e) {
         if (!e._constructed) {
@@ -47,7 +49,7 @@
       transition: all 0.4s linear
       &.move-transition /*动画完成之后的状态*/
         opacity: 1
-        transform: transilate3D(0, 0 ,0 ) /*开启硬件加速*/
+        transform: transilate3d(0, 0 ,0 ) /*开启硬件加速*/
         .inner
           display: inline-block
           font-size: 24px
@@ -57,7 +59,7 @@
           transform: rotate(0)
       &.move-enter, &.move-leave
         opacity: 0
-        transform: translate3D(24px ,0,0)
+        transform: translate3d(24px ,0,0)
         .inner
           transform: rotate(180deg)
     .cart-count
