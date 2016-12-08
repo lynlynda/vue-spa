@@ -14,7 +14,7 @@
       <li v-for="item in goods" class="food-list food-list-hook">
         <h1 class="title">{{item.name}}</h1>
         <ul>
-          <li v-for="food in item.foods" class="food-item border-1px">
+          <li @click="selectFood(food,$event)" v-for="food in item.foods" class="food-item border-1px">
             <div class="icon">
               <img width="57" height="57" :src="food.icon">
             </div>
@@ -40,10 +40,12 @@
   </div>
   <shopcart v-ref:shopcart :select-foods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
 </div>
+<food :food="selectedFood" v-ref:food></food>
 </template>
 <script type='text/javascript'>
 import BScroll from 'better-scroll';
 import shopcart from 'components/shopcart/shopcart';
+import food from 'components/food/food';
 import cartcontrol from 'components/cartcontrol/cartcontrol';
 
 const ERR_OK = 0;
@@ -57,7 +59,8 @@ const ERR_OK = 0;
       return {
         goods: [],
         listHeight: [],
-        scrollY: 0
+        scrollY: 0,
+        selectedFood: {}
       };
     },
     computed: {
@@ -107,6 +110,17 @@ const ERR_OK = 0;
         let el = foodlist[index];
         this.foodsScroll.scrollToElement(el, 300);
       },
+      // 可以被外部调用的方法没有下划线
+      selectFood(food, e) {
+        console.log('selectFood');
+        if (!e._constructed) {
+          return;
+        }
+        console.log(JSON.stringify(food));
+        this.selectedFood = food;
+        this.$refs.food.show();
+      },
+      // 私有方法名字有下划线
       _initScroll() {
         // console.log(this.$els);
         // console.log(this.$els.menuWrapper);
@@ -138,7 +152,7 @@ const ERR_OK = 0;
       }
     },
     components: {
-      shopcart, cartcontrol
+      shopcart, cartcontrol, food
     },
     events: {
       'cart.add'(target) {
@@ -175,7 +189,6 @@ const ERR_OK = 0;
         font-weight: 700
         .text
           border-1px(rgba(7,17,27,0.0))
-
       .icon
         display: inline-block
         vertical-align: top;

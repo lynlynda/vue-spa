@@ -195,7 +195,19 @@
 - ### getBoundingClientRect
  [getBoundingClientRect](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/getBoundingClientRect)   
 - ### 阻止冒泡  
-@click.stop.prevent 
+@click.stop.prevent  
+- 详情页图片问题  
+图片不能写死宽高，因为宽=高=设备屏幕宽，是变化的。但是如果不写，那么图片加载时异步过程，图片下的内容会跳动。因此，  
 
+```  
+.image-wrapper  
+	width: 100%
+	height: 0 
+	padding-top: 100% 
+	.image
+		width: 100%
+		height: 100%  
+``` 
+w3c中说，当padding设置百分数的时候，他是相对于该容器的宽来计算的
 
 	
