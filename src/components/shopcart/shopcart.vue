@@ -11,7 +11,7 @@
       <div class="price" :class="{'highlight': totalPrice > 0}">¥ {{totalPrice}}</div>
       <div class="desc">另外需配送费¥{{deliveryPrice}}元</div>   
     </div>
-    <div class="content-right" >   
+    <div class="content-right" @click.stop.prevent ="pay" >   
       <div class="pay" :class="{'enough':totalPrice >= minPrice}">
         {{payDesc}}
       </div>  
@@ -44,7 +44,7 @@
     </div>
   </div>
 </div>
-<div class="list-mask" v-show="listShow" transition='fade'></div>    
+<div class="list-mask" v-show="listShow" transition='fade' @click="toggleList"></div>    
  
 </template>
 <script type='text/javascript'>
@@ -157,6 +157,12 @@ export default {
       this.selectFoods.forEach((food) => {
         food.count = 0;
       });
+    },
+    pay() {
+      if (this.totalPrice < this.minPrice) {
+        return;
+      }
+      window.alert('需要支付' + this.totalPrice + '元');
     }
   },
   transitions: {

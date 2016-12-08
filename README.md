@@ -193,7 +193,9 @@
     ```   
      
 - ### getBoundingClientRect
- [getBoundingClientRect](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/getBoundingClientRect)  
+ [getBoundingClientRect](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/getBoundingClientRect)   
+- ### 阻止冒泡  
+@click.stop.prevent 
 
 
 	
