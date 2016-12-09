@@ -26,7 +26,28 @@
           </div>
         </div>
         <split></split>
-        <ratingselect :desc="desc" :ratings="food.ratings" :select-type="selectType" :only-content="onlyContent" ></ratingselect>
+        <ratingselect :desc="desc" :ratings="ratings" :select-type="selectType" :only-content="onlyContent" ></ratingselect>
+        <div class="rating-wrapper">
+          <ul>
+            <li v-for="rating in ratings" class="rating-item">
+              <div class="avatar">
+                <img src="" alt="" :src="rating.avatar">
+              </div>
+              <div class="content">
+                <h1 class="name">{{rating.username}}</h1>
+                <div class="star-wrapper">
+                   <star :size="24" :score="rating.score"></star>
+                   <span class="delivery" v-show="rating.deliveryTime">{{rating.deliveryTime}}</span>
+                </div>
+                <p class="text">{rating.text}</p>
+                <div class="recommend" v-show="rating.recommend && rating.recommend.length">
+                  <span class="icon-thumb_up"></span>
+                  <span v-for="item in rating.recommend">{{item}}</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -37,6 +58,7 @@ import star from 'components/star/star';
 import split from 'components/split/split';
 import ratingselect from 'components/ratingselect/ratingselect';
 const ALL = 2;
+const ERR_OK = 0;
   export default {
     props: {
       seller: {
@@ -45,14 +67,24 @@ const ALL = 2;
     },
     data() {
       return {
+        ratings: [],
         selectType: ALL,
         onlyContent: true,
         desc: {
           all: '全部',
           positive: '推荐',
           negtive: '吐槽'
-        }  
-      }
+        }
+      };
+    },
+    created() {
+      this.$http.get('/api/ratings').then((res) => {
+        console.log(res);
+        res = res.body;
+        if (res.errno === ERR_OK) {
+          this.ratings = res.data;
+        }
+      });
     },
     components: {
       star, ratingselect, split
