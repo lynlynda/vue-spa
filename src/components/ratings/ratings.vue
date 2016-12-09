@@ -1,6 +1,5 @@
 <template>
-  <div >
-    <div class="ratings">
+    <div class="ratings" v-el:ratings>
       <div class="ratings-content">
         <div class="overview">
           <div class="overview-left">
@@ -31,7 +30,7 @@
           <ul>
             <li v-for="rating in ratings" class="rating-item">
               <div class="avatar">
-                <img src="" alt="" :src="rating.avatar">
+                <img width="28"  height="28" src="" alt="" :src="rating.avatar">
               </div>
               <div class="content">
                 <h1 class="name">{{rating.username}}</h1>
@@ -39,10 +38,13 @@
                    <star :size="24" :score="rating.score"></star>
                    <span class="delivery" v-show="rating.deliveryTime">{{rating.deliveryTime}}</span>
                 </div>
-                <p class="text">{rating.text}</p>
+                <p class="text">{{rating.text}}</p>
                 <div class="recommend" v-show="rating.recommend && rating.recommend.length">
                   <span class="icon-thumb_up"></span>
-                  <span v-for="item in rating.recommend">{{item}}</span>
+                  <span class="item" v-for="item in rating.recommend">{{item}}</span>
+                </div>
+                <div class="time">
+                  {{rating.rateTime | formatDate}}
                 </div>
               </div>
             </li>
@@ -50,13 +52,13 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 <script type='text/javascript'>
-// import BScroll from 'better-scroll';
+import BScroll from 'better-scroll';
 import star from 'components/star/star';
 import split from 'components/split/split';
 import ratingselect from 'components/ratingselect/ratingselect';
+import {formatDate} from 'common/js/date';
 const ALL = 2;
 const ERR_OK = 0;
   export default {
@@ -72,7 +74,7 @@ const ERR_OK = 0;
         onlyContent: true,
         desc: {
           all: '全部',
-          positive: '推荐',
+          positive: '点赞',
           negtive: '吐槽'
         }
       };
@@ -83,15 +85,43 @@ const ERR_OK = 0;
         res = res.body;
         if (res.errno === ERR_OK) {
           this.ratings = res.data;
+          this.$nextTick(() => {
+            this.scroll = new BScroll(this.$els.ratings, {
+              click: true
+            });
+          });
         }
       });
     },
+    filters: {
+      formatDate(time) {
+        let date = new Date(time);
+        return formatDate(date, 'yyyy-MM-dd hh:mm');
+      }
+    },
     components: {
       star, ratingselect, split
+    },
+    events: {
+      'ratingtype.select'(type) {
+        console.log(type);
+        this.selectType = type;
+        this.$nextTick(() => { // 需要用$nextTick() 方法，因为vue的dom更新是异步的，会放入异步队列去执行
+          this.scroll.refresh();
+        });
+      },
+      'content.toggle'(onlyContent) {
+        this.onlyContent = onlyContent;
+        this.$nextTick(() => { // 需要用$nextTick() 方法，因为vue的dom更新是异步的，会放入异步队列去执行
+          this.scroll.refresh();
+        });
+      }
     }
   };
 </script>
 <style lang='stylus' rel='stylssheet/stylus'>
+  @import '../../common/stylus/mixin'
+
   .ratings
     position: fixed
     top: 174px
@@ -160,6 +190,75 @@ const ERR_OK = 0;
           font-size: 12px
           color: rgb(147,153,159)
           margin: 12px
+    .rating-wrapper
+      padding: 0 18px
+      .rating-item
+        display: flex
+        padding: 18px 0
+        border-1px(rgba(7,17,27,.1))
+        .avatar
+          flex: 0 0 28px
+          width: 28px
+          margin-right: 12px
+          img
+            border-radius: 50%
+        .content
+          position: relative
+          flex: 1
+          .name
+            margin-bottom: 4px
+            line-height: 12px
+            font-size: 10px
+            color: rgb(7,17,27)
+          .star-wrapper
+            margin-bottom: 6px
+            font-size: 0
+            .star
+              display: inline-block
+              vertical-align: top
+              margin-right: 6px
+            .delivery
+              display: inline-block
+              vertical-align: top
+              line-height: 12px
+              font-size: 10px
+              color: rgb(147,153,159)
+          .text
+            margin-bottom: 8px
+            line-height: 18px
+            font-size: 12px
+            color: rgb(7,17,27)
+          .recommend
+            line-height: 16px
+            font-size: 0
+            .icon-thumb_up, .item
+              display: inline-block
+              margin: 0 8px 4px 0
+              font-size: 9px
+            .icon-thumb_up
+              color: rgb(0,160,220)
+            .item
+              padding: 0 6px
+              border: 1px solid rgba(7,17,27,.1)
+              border-radius: 1px
+              color: rgb(147,153,159)
+              background: #fff
+          .time
+            position: absolute
+            top: 0
+            right: 0
+            line-height: 12px
+            font-size: 10px
+            color: rgb(147,153,159)
+
+
+
+
+
+
+
+
+
 
 
 
