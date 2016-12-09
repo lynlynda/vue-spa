@@ -28,7 +28,7 @@
         <ratingselect :desc="desc" :ratings="ratings" :select-type="selectType" :only-content="onlyContent" ></ratingselect>
         <div class="rating-wrapper">
           <ul>
-            <li v-for="rating in ratings" class="rating-item">
+            <li v-for="rating in ratings" class="rating-item" v-show="needShow(rating.rateType,rating.text)">
               <div class="avatar">
                 <img width="28"  height="28" src="" alt="" :src="rating.avatar">
               </div>
@@ -79,6 +79,18 @@ const ERR_OK = 0;
         }
       };
     },
+    methods: {
+      needShow(type, text) {
+        if (this.onlyContent && !text) {
+          return false;
+        }
+        if (this.selectType === ALL) {
+          return true;
+        } else {
+          return type === this.selectType;
+        }
+      }
+    },
     created() {
       this.$http.get('/api/ratings').then((res) => {
         console.log(res);
@@ -105,6 +117,7 @@ const ERR_OK = 0;
     events: {
       'ratingtype.select'(type) {
         console.log(type);
+        console.log(this.selectType);
         this.selectType = type;
         this.$nextTick(() => { // 需要用$nextTick() 方法，因为vue的dom更新是异步的，会放入异步队列去执行
           this.scroll.refresh();
