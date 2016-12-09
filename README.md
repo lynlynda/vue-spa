@@ -60,6 +60,7 @@
   
 - ### this.$nextTick(() => {})   
   涉及dom相关的计算时，需要保证dom已经渲染完毕：
+  需要用$nextTick() 方法，因为vue的dom更新是异步的，会放入异步队列去执行
     
   ```
 	  this.$nextTick(() => {   
@@ -212,5 +213,20 @@ w3c中说，当padding设置百分数的时候，他是相对于该容器的宽�
 
 
 - 绑定class  
-```<span :class="{'icon-thumb_up':rating.rateType === 0,'icon-thumb_down':rating.rateType === 1}"></span>```
-	
+```<span :class="{'icon-thumb_up':rating.rateType === 0,'icon-thumb_down':rating.rateType === 1}"></span>```  
+
+- for...of 方法  
+一个数据结构只要部署了Symbol.iterator属性，就被视为具有iterator接口，就可以用for...of循环遍历它的成员。for...of循环可以使用的范围包括数组、Set 和 Map 结构、某些类似数组的对象（比如arguments对象、DOM NodeList 对象）、后文的 Generator 对象，以及字符串。对于***普通的对象***，for...of结构不能直接使用，会报错，必须部署了iterator接口后才能使用。
+	[es6的for...of](http://es6.ruanyifeng.com/#docs/iterator#for---of循环)  
+- vue的filter  
+```   
+<div class="time">{{rating.rateTime | formatDate}}</div>  
+
+filters: {
+      formatDate(time) {
+        let date = new Date(time);
+        return formatDate(date, 'yyyy-MM-dd hh:mm');
+      }
+    }  
+ ```   
+-  正则的test方法

@@ -1,9 +1,134 @@
 <template>
   <div >
-    ratings
+    <div class="ratings">
+      <div class="ratings-content">
+        <div class="overview">
+          <div class="overview-left">
+            <h1 class="score">{{seller.score}}</h1>
+            <div class="title">综合评分</div>
+            <div class="rank">高于周边商家{{seller.rankRate}}%</div>
+          </div>
+          <div class="overview-right">
+            <div class="score-wrapper">
+              <span class="title">服务态度</span>
+              <star :size="36" :score="seller.serviceScore"></star> 
+              <span class="score">{{seller.serviceScore}}</span>
+            </div>
+            <div class="score-wrapper">
+              <span class="title">商品评分</span>
+              <star :size="36" :score="seller.foodScore"></star> 
+              <span class="score">{{seller.foodScore}}</span>
+            </div>
+            <div class="delivery-wrapper">
+              <span class="title">送达时间</span>
+              <span class="delivery">{{seller.deliveryTime}}分钟</span>
+            </div>
+          </div>
+        </div>
+        <split></split>
+        <ratingselect :desc="desc" :ratings="food.ratings" :select-type="selectType" :only-content="onlyContent" ></ratingselect>
+      </div>
+    </div>
   </div>
 </template>
 <script type='text/javascript'>
-  export default {};
+// import BScroll from 'better-scroll';
+import star from 'components/star/star';
+import split from 'components/split/split';
+import ratingselect from 'components/ratingselect/ratingselect';
+const ALL = 2;
+  export default {
+    props: {
+      seller: {
+        type: Object
+      }
+    },
+    data() {
+      return {
+        selectType: ALL,
+        onlyContent: true,
+        desc: {
+          all: '全部',
+          positive: '推荐',
+          negtive: '吐槽'
+        }  
+      }
+    },
+    components: {
+      star, ratingselect, split
+    }
+  };
 </script>
-<style lang='stylus' rel='stylssheet/stylus'></style>
+<style lang='stylus' rel='stylssheet/stylus'>
+  .ratings
+    position: fixed
+    top: 174px
+    left: 0
+    bottom: 0
+    width: 100%
+    overflow: hidden
+    .overview
+      display: flex
+      padding: 18px 0
+      .overview-left
+        flex: 0 0 137px
+        padding: 6px 0
+        width: 137px
+        border-right: 1px solid rgba(7,17,27,.1)
+        text-align: center
+        @media only screen and (max-width: 320px)
+          flex: 0 0 110px
+          width: 110px
+        .score
+          margin-bottom: 6px
+          line-height: 28px
+          font-size: 24px
+          color: rgb(255,153,0)
+        .title
+          margin-bottom: 8px
+          font-size: 12px
+          line-height: 12px
+          color: rgb(7,17,27)
+        .rank
+          line-height: 10px
+          font-size: 10px
+          color: rgb(147,153,159)
+      .overview-right
+        padding: 6px 0 6px 24px
+        @media only screen and (max-width: 320px)
+          padding-left: 6px
+        flex: 1
+        padding-left: 24px
+        .score-wrapper
+          margin-bottom: 8px
+          font-size: 0
+          .title
+            display: inline-block
+            line-height: 18px
+            vertical-align: top
+            font-size: 12px
+            color: rgb(7,17,27)
+          .star
+            display: inline-block
+            vertical-align: top
+            margin: 0 12px
+          .score
+            display: inline-block
+            line-height: 18px
+            vertical-align: top
+            font-size: 12px
+            color: rgb(255,153,0)
+      .delivery-wrapper
+        font-size: 0
+        .title
+          line-height: 18px
+          font-size: 12px
+          color: rgb(7,17,27)
+        .delivery
+          font-size: 12px
+          color: rgb(147,153,159)
+          margin: 12px
+
+
+
+</style>

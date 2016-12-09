@@ -9,11 +9,6 @@
       <span class="icon-check_circle"></span>
       <span class="text">只看有内容的评价</span>
     </div>
-    <div class="ratings">
-      <ul>
-        <li v-for="rating in ratings">{{{rating.text}}}</li>
-      </ul>
-    </div>
   </div>
 </template>
 <script type='text/javascript'>
@@ -65,14 +60,14 @@
           return;
         }
         this.selectType = type;
-        this.$dispatch('', this.selectType, type);
+        this.$dispatch('ratingtype.select', type);
       },
       toggleContent(e) {
         if (!e._constructed) {
           return;
         }
         this.onlyContent = !this.onlyContent;
-        this.$dispatch('', this.onlyContent, this.onlyContent);
+        this.$dispatch('content.toggle', this.onlyContent);
       }
     }
   };
