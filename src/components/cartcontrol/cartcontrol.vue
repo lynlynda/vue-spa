@@ -1,10 +1,10 @@
 <template>
   <div class="cartcontrol">
-    <div class="cart-decrease " v-show="food.count>0" @click="decreaseCart" transition="move">
+    <div class="cart-decrease " v-show="food.count>0" @click.stop.prevent="decreaseCart" transition="move">
       <span class="icon-remove_circle_outline inner"></span>
     </div>
     <div class="cart-count" v-show="food.count>0">{{food.count}}</div>
-    <div class="cart-add icon-add_circle" @click="addCart">
+    <div class="cart-add icon-add_circle" @click.stop.prevent="addCart">
     </div>
   </div>
 </template>
@@ -21,7 +21,6 @@
         if (!e._constructed) {
           return;
         }
-        console.log('jjj');
         if (!this.food.count) {
           Vue.set(this.food, 'count', 1);
         } else {

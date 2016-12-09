@@ -210,4 +210,7 @@
 ``` 
 w3c中说，当padding设置百分数的时候，他是相对于该容器的宽来计算的
 
+
+- 绑定class  
+```<span :class="{'icon-thumb_up':rating.rateType === 0,'icon-thumb_down':rating.rateType === 1}"></span>```
 	
