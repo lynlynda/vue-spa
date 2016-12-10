@@ -229,4 +229,12 @@ filters: {
       }
     }  
  ```   
--  正则的test方法
+-  正则的test方法     
+- ready()声明周期，是dom渲染完毕之后调用的方法  
+- watch方法  
+watch: {
+	'seller'() {
+
+	}	
+}  
+观察seller变量，执行相应方法
