@@ -28,7 +28,7 @@
             </div>
           </li>
         </ul>
-        <div class="favorite">
+        <div class="favorite" @click="toggleFavorite"> 
           <span class="icon-favorite" :class="{'active':favorite}"></span>
           <span class="text">{{favoriteText}}</span>
         </div>
@@ -71,6 +71,7 @@
 </template>
 <script type='text/javascript'>
 import star from 'components/star/star';
+import {saveToLocal, loadFromLocal} from 'common/js/store';
 import split from 'components/split/split';
 import BScroll from 'better-scroll';
   export default {
@@ -81,7 +82,9 @@ import BScroll from 'better-scroll';
     },
     data() {
       return {
-        favorite: false
+        favorite: (() => {
+          return loadFromLocal(this.seller.id, 'favorite', false);
+        })()
       };
     },
     computed: {
@@ -106,6 +109,13 @@ import BScroll from 'better-scroll';
       }
     },
     methods: {
+      toggleFavorite(e) {
+        if (!e._constructed) {
+          return;
+        }
+        this.favorite = !this.favorite;
+        saveToLocal(this.seller.id, 'favorite', this.favorite);
+      },
       _initScroll() {
         if (!this.scroll) {
           this.scroll = new BScroll(this.$els.seller, {
@@ -190,7 +200,8 @@ import BScroll from 'better-scroll';
               font-size: 24px
       .favorite
         position: absolute
-        right: 18px
+        width: 50px
+        right: 11px
         top: 18px
         text-align: center
         .icon-favorite

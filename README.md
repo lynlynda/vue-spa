@@ -229,7 +229,7 @@ filters: {
       }
     }  
  ```   
--  正则的test方法     
+-  正则的test方法 match方法    
 - ready()声明周期，是dom渲染完毕之后调用的方法  
 - watch方法  
 watch: {
@@ -239,4 +239,8 @@ watch: {
 }  
 观察seller变量，执行相应方法  
 - 商家实景图  
-需要给ul赋值是因为，ul作为可以滑动的内容块他的长度应该大于包含他的块，不然不能滑动。
+需要给ul赋值是因为，ul作为可以滑动的内容块他的长度应该大于包含他的块，不然不能滑动。  
+- 什么情况用localstorage   
+- Object.assign  
+- localstorage  
+- keep-alive
