@@ -243,4 +243,10 @@ watch: {
 - 什么情况用localstorage   
 - Object.assign  
 - localstorage  
-- keep-alive
+- keep-alive  
+- 总结  
+vue-cli脚手架
+es6 + eslint
+组件化，模块化
+vue-router,vue-source
+vue.js 权威指南
